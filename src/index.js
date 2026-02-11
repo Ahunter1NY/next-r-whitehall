@@ -1,5 +1,4 @@
 import GtfsRealtimeBindings from "gtfs-realtime-bindings";
-import { Buffer } from "buffer";
 
 const FEED_URL =
   "https://api-endpoint.mta.info/Dataservice/mtagtfsfeeds/nyct%2Fgtfs-nqrw";
@@ -45,8 +44,8 @@ export default {
 
       const arrBuf = await res.arrayBuffer();
       const feed = GtfsRealtimeBindings.transit_realtime.FeedMessage.decode(
-        Buffer.from(arrBuf)
-      );
+      new Uint8Array(arrBuf)
+);
 
       const now = Math.floor(Date.now() / 1000);
       let bestEpoch = null;
