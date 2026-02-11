@@ -83,8 +83,8 @@ for (const t of upcoming) {
           route: "R",
           station: "Whitehall St–South Ferry",
           direction: "Brooklyn-bound (needs confirmation)",
-          matchedStopId: bestStopId,
-          nextArrivalEpoch: bestEpoch,
+matchedStopId: "R27S",
+nextArrivalsEpoch: nextTwo,
           fetchedAtEpoch: Math.floor(Date.now() / 1000),
         }),
         { status: 200, headers: { ...corsHeaders(), "Content-Type": "application/json" } }
