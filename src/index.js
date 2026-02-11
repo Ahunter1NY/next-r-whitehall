@@ -7,7 +7,7 @@ const ROUTE_ID = "R";
 
 // Whitehall St–South Ferry stop is R27 in GTFS. Realtime stop IDs are typically R27S / R27N.
 // We’ll check both and take the soonest upcoming arrival.
-const STOP_IDS_TO_CHECK = ["R27S", "R27N"];
+const STOP_IDS_TO_CHECK = ["R27S"];
 
 function corsHeaders() {
   return {
