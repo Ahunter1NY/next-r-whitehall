@@ -47,29 +47,35 @@ export default {
       new Uint8Array(arrBuf)
 );
 
-      const now = Math.floor(Date.now() / 1000);
-      let bestEpoch = null;
-      let bestStopId = null;
+    const now = Math.floor(Date.now() / 1000);
+const upcoming = [];
 
-      for (const entity of feed.entity) {
-        const tu = entity.tripUpdate;
-        if (!tu?.trip) continue;
-        if (tu.trip.routeId !== ROUTE_ID) continue;
+for (const entity of feed.entity) {
+  const tu = entity.tripUpdate;
+  if (!tu?.trip) continue;
+  if (tu.trip.routeId !== ROUTE_ID) continue;
 
-        for (const u of tu.stopTimeUpdate || []) {
-          if (!u.stopId) continue;
-          if (!STOP_IDS_TO_CHECK.includes(u.stopId)) continue;
+  for (const u of tu.stopTimeUpdate || []) {
+    if (!u.stopId) continue;
+    if (!STOP_IDS_TO_CHECK.includes(u.stopId)) continue;
 
-          const t = (u.arrival && u.arrival.time) || (u.departure && u.departure.time);
-          if (!t) continue;
-          if (t <= now) continue;
+    const t = (u.arrival && u.arrival.time) || (u.departure && u.departure.time);
+    if (!t) continue;
+    if (t <= now) continue;
 
-          if (bestEpoch === null || t < bestEpoch) {
-            bestEpoch = t;
-            bestStopId = u.stopId;
-          }
-        }
-      }
+    upcoming.push(t);
+  }
+}
+
+// sort ascending and keep the next 2 unique times
+upcoming.sort((a, b) => a - b);
+const nextTwo = [];
+for (const t of upcoming) {
+  if (nextTwo.length === 0 || t !== nextTwo[nextTwo.length - 1]) {
+    nextTwo.push(t);
+  }
+  if (nextTwo.length === 2) break;
+}
 
       return new Response(
         JSON.stringify({
