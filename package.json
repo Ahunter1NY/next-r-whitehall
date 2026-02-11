@@ -1,4 +1,3 @@
 "dependencies": {
-  "gtfs-realtime-bindings": "^1.1.1",
-  "buffer": "^6.0.3"
+  "gtfs-realtime-bindings": "^1.1.1"
 }
